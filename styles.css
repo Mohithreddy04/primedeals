@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-image:url('PRIME DEALS.png');
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Ensures the body takes full height */
