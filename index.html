@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="favcoin.png" />
+    <link rel="stylesheet" href="styles.css">
+    <title>PRIME DEALS</title>
+</head>
+<body>
+    <header class="header">
+        <div class="navbar">
+            <div class="logo">PRIME DEALS</div>
+            <nav>
+                <ul>
+                    <li><a href="offers.html">Offers</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>PRIME DEALS</h1>
+        <div class="form-container">
+            <form id="ottForm">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="plan">Choose Your Plan</label>
+                <select id="plan" name="plan" required>
+                    <option value="Basic Plan">Basic Plan - $5</option>
+                    <option value="Standard Plan">Standard Plan - $10</option>
+                    <option value="Premium Plan">Premium Plan - $15</option>
+                </select>
+                <label for="bankingName">Banking Name</label>
+                <input type="text" id="bankingName" name="bankingName" required>
+                <label for="amount">Amount to Pay</label>
+                <input type="text" id="amount" name="amount" required readonly>
+
+                <h3>Scan to Pay</h3>
+                <div class="qrcode">
+                    <img src="phonepay.jpg" alt="Payment QR Code">
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div class="thank-you-message" id="thankYouMessage" style="display:none;">
+            Thank you for choosing Prime Deals! We will verify your payment and you will receive your account details in 5 mins to your registered email.
+        </div>
+    </div>
+
+    <footer class="footer">
+        &copy; 2024 Prime Deals. All rights reserved.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("lVEdOKIhaN5C_hktq");
+        })();
+
+        document.getElementById('ottForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let name = document.getElementById('name').value;
+            let email = document.getElementById('email').value;
+            let plan = document.getElementById('plan').value;
+            let bankingName = document.getElementById('bankingName').value;
+            let amount = document.getElementById('amount');
+
+            // Set amount based on plan selected
+            if (plan === "Basic Plan") {
+                amount.value = "$5";
+            } else if (plan === "Standard Plan") {
+                amount.value = "$10";
+            } else {
+                amount.value = "$15";
+            }
+
+            // Send email with user details
+            emailjs.send("service_4z53bkp", "template_sup9h9n", {
+                name: name,
+                email: email,
+                plan: plan,
+                amount: amount.value
+            }).then(function(response) {
+                document.getElementById('thankYouMessage').style.display = 'block';
+            }, function(error) {
+                alert("Failed to send email: " + error.text);
+            });
+        });
+    </script>
+</body>
+</html>
+	
